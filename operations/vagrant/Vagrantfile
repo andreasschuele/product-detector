@@ -1,0 +1,50 @@
+# Vagrant file documentation:
+# https://www.vagrantup.com/docs/index.html
+
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "ubuntu/bionic64"
+    config.vm.box_version = "20210720.0.1"
+    
+    config.vm.define "box" do |box|
+        box.vm.provider "virtualbox" do |v|
+            v.name = "product_detector_box"
+            v.memory = 4096
+            v.cpus = 4
+        end
+
+        # Network settings
+        
+        # Postgre SQL
+        box.vm.network "forwarded_port", guest: 5432, host: 5432
+    
+        # Provision 'once'
+       
+        box.vm.provision "file", source: "../provision/setup.sh", destination: "provision/setup.sh"
+
+        box.vm.provision "shell", inline: <<-SHELL
+            sudo chmod +x provision/setup.sh
+
+            ./provision/setup.sh
+        SHELL
+
+        # Provision 'always'
+
+        box.vm.provision "file", run: "always", source: "../provision/application", destination: "provision/application"
+                   
+        box.vm.provision "shell", run: "always", inline: <<-SHELL
+            sudo docker start db-postgres
+        SHELL
+
+        # Message after Vagrant VM is up and provisioned
+    
+        box.vm.post_up_message = <<-MESSAGE
+        All done!
+    
+        ------------------------------------------------------
+        - PostgreSQL                   - localhost:5432
+        ------------------------------------------------------
+        MESSAGE
+    end
+
+end

@@ -1,0 +1,35 @@
+# Server properties.
+
+server:
+  address: ${SERVER_ADDRESS:0.0.0.0}
+  port: ${SERVER_PORT:5000}
+
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
+
+# Vision API properties.
+
+vision:
+  api:
+    url: 'http://localhost:5080'
+    authorization:
+      user: 'user'
+      password: 'user'
+  modelName: 'product-detector'
+  demo.baseModelName: 'product-detector-base'
+
+# Spring properties.
+
+spring:
+  datasource.driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
+  datasource.url: ${DB_URL:jdbc:postgresql://localhost:5432/product_detector}
+  datasource.username: ${DB_USERNAME:product_detector}
+  datasource.password: ${DB_PASSWORD:product_detector}
+
+  liquibase.enabled: true
+
+  jackson:
+    serialization.WRITE_DATES_AS_TIMESTAMPS: false
+    time-zone: UTC
+
+  profiles.active: ${SPRING_PROFILE_ACTIVE:swagger,development}

@@ -1,0 +1,36 @@
+{
+  "name": "product-detector-client",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./node_modules/webpack/bin/webpack.js server --progress",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "4.0.0-alpha.60",
+    "@material-ui/styles": "^4.11.4",
+    "@types/react": "^17.0.15",
+    "@types/react-dom": "^17.0.9",
+    "axios": "^0.21.1",
+    "bootstrap": "^5.0.2",
+    "jquery": "3.6.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-webcam": "^5.2.4"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.6",
+    "@types/node": "^16.4.2",
+    "css-loader": "^6.2.0",
+    "source-map-loader": "^3.0.0",
+    "style-loader": "^3.2.1",
+    "svg-loader": "0.0.2",
+    "ts-loader": "^9.2.4",
+    "typescript": "^4.3.5",
+    "webpack": "^5.46.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

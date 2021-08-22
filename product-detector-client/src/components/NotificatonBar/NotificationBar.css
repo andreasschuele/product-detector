@@ -1,0 +1,7 @@
+.MuiSnackbar-root {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 24px !important;
+    transform: translate(-50%, -140%) !important;
+    top: 50% !important;
+}

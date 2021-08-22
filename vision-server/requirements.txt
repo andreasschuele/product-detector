@@ -1,0 +1,19 @@
+# Python 3.8.5
+
+# python -m pip install -r requirements.txt
+
+click==7.1.2
+h5py==3.1.0
+Flask==2.0.1
+flask_httpauth==4.4.0
+flask-restplus==0.13.0
+Flask-Cors==3.0.10
+flask-swagger-ui==3.36.0
+matplotlib==3.3.1
+numpy==1.19.5
+opencv-python==4.5.3.56
+Pillow==8.2.0
+tinydb==4.4.0
+tensorflow==2.5.0
+tensorflow-gpu==2.5.0
+scipy==1.7.1

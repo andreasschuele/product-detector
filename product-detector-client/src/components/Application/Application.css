@@ -1,0 +1,123 @@
+.App {}
+
+.App-content {
+    padding: 2em 1em;
+    max-width: 960px;
+    display: block;
+    margin: 150px auto 20vh;
+    background-color: #fff;
+    box-shadow: 5px 5px 9px -3px rgba(0, 0, 0, 0.37);
+}
+
+.app-inner-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.applicationTitle {
+  text-align: center;
+}
+
+.panel {
+  padding: 5px;
+  width: 100%;
+}
+
+.login-panel {
+    margin-top: 20px;
+    max-width: 400px;
+    min-height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detect-panel {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.maintain-panel {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.camera-panel {
+}
+
+.hbreak {
+  min-height: 2px;
+  background-color: black;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.presented-item-panel {
+  min-height: 400px;
+}
+
+
+.similar-items-panel {
+}
+
+.similar-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    margin-left: 20px;
+}
+
+.simliar-item-container {
+    flex-basis: 30%;
+}
+
+.panel-title {
+  font-size: 22px;
+  color:cornflowerblue;
+  display: block;
+  width: 100%;
+}
+
+.camera-panel .panel-title {
+  float: left;
+}
+
+input::-webkit-clear-button {
+    display: none;
+}
+
+.row {
+    margin: 10px;
+}
+
+div[name='inputPad'] div[name='inputField'] {
+    height: 40px;
+}
+
+.product-list {
+    height: 200px;
+    overflow-y: scroll;
+    border-width: 2px;
+    border-color: black;
+    border-style: double;
+    list-style-type: disclosure-closed;
+}
+
+.product-list li {
+    transition-property: background-color;
+    transition-delay: 100ms;
+}
+
+.product-list li:hover {
+    background-color: #ccc;
+}
+
+.product-list-item-selected {
+  background-color: #b1bcff !important;
+  font-weight: bold;
+}

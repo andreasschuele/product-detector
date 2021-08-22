@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="andreas">
+        <!--
+        'User' table definition.
+        -->
+
+        <createTable tableName="TUSER">
+            <column name="ID"
+                    type="INT"
+                    autoIncrement="true"
+                    remarks="Entity ID.">
+                <constraints primaryKey="true"
+                             primaryKeyName="TUSER_PK_ID"
+                             nullable="false"/>
+            </column>
+            <column name="USERNAME"
+                    type="VARCHAR(60)"
+                    remarks="User account login related username.">
+                <constraints unique="true"
+                             uniqueConstraintName="TUSER_UC_USERNAME"
+                             nullable="false"/>
+            </column>
+            <column name="PASSWORD"
+                    type="VARCHAR(100)"
+                    remarks="User password.">
+                <constraints nullable="false" />
+            </column>
+            <!--
+            The 'enabled' flag cab be used to disable the account of a user without marking it for deletion.
+            -->
+            <column name="ENABLED"
+                    type="boolean"
+                    defaultValueBoolean="false"
+                    remarks="A flag to determine if this user account is enabled or disabled.">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createIndex indexName="TUSER_IDX_ID"
+                     tableName="TUSER">
+            <column name="ID"/>
+        </createIndex>
+
+        <createIndex indexName="TUSER_IDX_USERNAME"
+                     tableName="TUSER">
+            <column name="USERNAME"/>
+        </createIndex>
+
+        <!--
+        'Roles' table definition.
+        -->
+
+        <createTable tableName="TROLE">
+            <column name="ID" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="TROLE_PK_ID" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(60)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="TROLE_UC_NAME" />
+            </column>
+        </createTable>
+
+        <createIndex indexName="TROLE_IDX_ID"
+                     tableName="TROLE">
+            <column name="ID"/>
+        </createIndex>
+
+        <createIndex indexName="TROLE_IDX_NAME"
+                     tableName="TROLE">
+            <column name="NAME"/>
+        </createIndex>
+
+        <insert tableName="TROLE">
+            <column name="ID" value="1"/>
+            <column name="NAME" value="ROLE_ADMIN"/>
+        </insert>
+
+        <insert tableName="TROLE">
+            <column name="ID" value="2"/>
+            <column name="NAME" value="ROLE_USER"/>
+        </insert>
+
+        <!--
+        'User roles' table definition.
+        -->
+
+        <createTable tableName="TUSER_ROLE">
+            <column name="USER_ID" type="INT">
+                <constraints nullable="false"  foreignKeyName="TUSER_ROLE_FK_USER_ID" referencedTableName="TUSER" referencedColumnNames="ID"/>
+            </column>
+            <column name="ROLE_ID" type="INT">
+                <constraints nullable="false"  foreignKeyName="TUSER_ROLE_FK_ROLE_ID" referencedTableName="TROLE" referencedColumnNames="ID"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey constraintName="TUSER_ROLE_PK" tableName="TUSER_ROLE" columnNames="USER_ID, ROLE_ID" />
+
+        <insert tableName="TUSER">
+            <column name="ID" value="1"/>
+            <column name="USERNAME" value="admin"/>
+            <!-- secret -->
+            <column name="PASSWORD" value="$2a$06$yEZ9/qNnA4HqgumZuqjl1OI3saC793SGCj1WwqmYKYq9LkaRNoRN6"/>
+
+            <column name="ENABLED" value="true"/>
+        </insert>
+
+        <insert tableName="TUSER_ROLE">
+            <column name="USER_ID" value="1"/>
+            <column name="ROLE_ID" value="1"/>
+        </insert>
+
+        <insert tableName="TUSER_ROLE">
+            <column name="USER_ID" value="1"/>
+            <column name="ROLE_ID" value="2"/>
+        </insert>
+
+        <insert tableName="TUSER">
+            <column name="ID" value="2"/>
+            <column name="USERNAME" value="test1"/>
+            <!-- secret -->
+            <column name="PASSWORD" value="$2a$06$yEZ9/qNnA4HqgumZuqjl1OI3saC793SGCj1WwqmYKYq9LkaRNoRN6"/>
+
+            <column name="ENABLED" value="true"/>
+        </insert>
+
+        <insert tableName="TUSER_ROLE">
+            <column name="USER_ID" value="2"/>
+            <column name="ROLE_ID" value="2"/>
+        </insert>
+
+        <!--
+        'Product' table definition.
+        -->
+
+        <createTable tableName="TPRODUCT">
+            <column name="ID" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="TPRODUCT_PK_ID" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="true" />
+            </column>
+            <column name="NOTES" type="VARCHAR">
+                <constraints nullable="true" />
+            </column>
+            <column name="ACTIVE"
+                    type="boolean"
+                    defaultValueBoolean="false"
+                    remarks="...">
+                <constraints nullable="false" />
+            </column>
+            <column name="MAIN_IMAGE" type="BLOB">
+                <constraints nullable="true" />
+            </column>
+            <column name="MAIN_IMAGE_TYPE" type="VARCHAR(10)">
+                <constraints nullable="true" />
+            </column>
+            <column name="VISION_LABEL" type="VARCHAR(100)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <!--
+        'Product image' table definition.
+        -->
+
+        <createTable tableName="TPRODUCT_IMAGE">
+            <column name="ID" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="TPRODUCT_IMAGE_PK_ID" nullable="false"/>
+            </column>
+            <column name="PRODUCT_ID" type="INT">
+                <constraints nullable="true"  foreignKeyName="TPRODUCT_IMAGE_FK_TPRODUCT_ID" referencedTableName="TPRODUCT" referencedColumnNames="ID"/>
+            </column>
+            <column name="VISION_DATA_ID" type="VARCHAR(50)">
+                <constraints nullable="true" />
+            </column>
+            <column name="CREATED_AT" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

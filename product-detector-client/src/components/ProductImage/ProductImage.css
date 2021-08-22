@@ -1,0 +1,10 @@
+.presented-item-image-container {
+    border-width: 2px;
+    border-style: dashed;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 100%;
+    width: 100%;
+    min-height: 400px;
+}

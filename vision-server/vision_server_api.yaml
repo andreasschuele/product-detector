@@ -1,0 +1,472 @@
+openapi: 3.0.1
+info:
+  title: "Vision API"
+  description: "The Vision API supports objects detection in images. The vision server can maintain multiple and independent vision models each with it's own set of labels and a trained neural network."
+  version: "1.0.0"
+servers:
+  - url: /api/v1/
+tags:
+  - name: vision
+    description: "The Vision API endpoints."
+paths:
+  /vision/model:
+    post:
+      operationId: modelCreate
+      tags:
+        - vision
+      summary: "Creates a new vision model."
+      description:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelCreateRequest'
+        required: true
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelCreateResponse'
+      x-codegen-request-body-name: body
+    get:
+      operationId: modelGetAll
+      tags:
+        - vision
+      summary: "Gets a list of all vision models."
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelGetAllResponse'
+  /vision/model/{modelId}:
+    get:
+      operationId: modelGet
+      tags:
+        - vision
+      summary: "Gets the state of a vision model."
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelGetResponse'
+    delete:
+      operationId: modelDelete
+      tags:
+        - vision
+      summary: "Deletes a vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /vision/model/{modelId}/data:
+    post:
+      operationId: modelDataCreate
+      tags:
+        - vision
+      summary: "Adds new object data to a vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelDataCreateRequest'
+        required: true
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelDataCreateResponse'
+    get:
+      operationId: modelDataGetAll
+      tags:
+        - vision
+      summary: "Gets all object data of a vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelDataGetAllResponse'
+  /vision/model/{modelId}/data/{dataId}:
+    get:
+      operationId: modelDataGet
+      tags:
+        - vision
+      summary: "Gets certain object data state of a vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: dataId
+          in: path
+          description: The data ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: downloadFile
+          in: query
+          description: An optional flag (true/false) to determine if the file should be provided as file download or base64 string.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelDataGetResponse'
+    delete:
+      operationId: modelDataDelete
+      tags:
+        - vision
+      summary: "Deletes certain object data of a vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: dataId
+          in: path
+          description: The data ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description:
+  /vision/model/{modelId}/detect:
+    post:
+      operationId: modelDetect
+      tags:
+        - vision
+      summary: "Runs object detection with a certain vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        description:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelDetectRequest'
+        required: true
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelDetectResponse'
+      x-codegen-request-body-name: body
+  /vision/model/{modelId}/train:
+    post:
+      operationId: modelTrain
+      tags:
+        - vision
+      summary: "Runs object detection training for a certain vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        description:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelTrainRequest'
+        required: true
+      responses:
+        '200':
+          description:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelTrainResponse'
+  /vision/model/{modelId}/train/{trainId}:
+    get:
+      operationId: modelTrainGetStatus
+      tags:
+        - vision
+      summary: "Gets the object detection training status of a certain vision model."
+      description:
+      parameters:
+        - name: modelId
+          in: path
+          description: The model ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: trainId
+          in: path
+          description: The session ID.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+          '200':
+            description:
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ModelTrainGetResponse'
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    ModelTrainRequest:
+      type: object
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValue'
+    ModelTrainResponse:
+      type: object
+      properties:
+        trainId:
+          type: string
+    ModelTrainGetResponse:
+      type: object
+      properties:
+        progress:
+          type: integer
+          format: int32
+    ModelGetResponse:
+      type: object
+      properties:
+        modelId:
+          type: string
+        modelName:
+          type: string
+    ModelGetAllResponse:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            type: object
+            properties:
+              modelId:
+                type: string
+              modelName:
+                type: string
+    KeyValue:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    ModelCreateRequest:
+      type: object
+      properties:
+        modelName:
+          type: string
+        baseModel:
+          type: string
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValue'
+      required:
+        - modelName
+    ModelCreateResponse:
+      type: object
+      properties:
+        modelId:
+          type: string
+        modelName:
+          type: string
+        baseModel:
+          type: string
+    ModelDetectRequest:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/Image'
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyValue'
+    ModelDataCreateRequest:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/Image'
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectInData'
+    ObjectInData:
+      type: object
+      properties:
+        label:
+          type: string
+        boundingBox:
+          $ref: '#/components/schemas/BoundingBox'
+    ModelDataCreateResponse:
+      type: object
+      properties:
+        dataId:
+          type: string
+    ModelDataGetAllResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              dataId:
+                type: string
+              fileName:
+                type: string
+              objects:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectInData'
+    ModelDataGetResponse:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/Image'
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectInData'
+    ModelDetectResponse:
+      type: object
+      properties:
+        detectedObjects:
+          type: array
+          items:
+            type: object
+            properties:
+              labelId:
+                type: integer
+                format: int32
+              label:
+                type: string
+              probability:
+                type: number
+                format: float
+              boundingBox:
+                $ref: '#/components/schemas/BoundingBox'
+    BoundingBox:
+      type: object
+      properties:
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+    Image:
+      type: object
+      properties:
+        fileName:
+          type: string
+        format:
+          type: string
+        data:
+          type: string
+        encoding:
+          type: string
