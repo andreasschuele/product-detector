@@ -1,8 +1,6 @@
 # Product Detector
 
-The Product Detector is a web application that support the classification of products based on taken pictures.
-
-_The application is a proof of concept._
+The Product Detector is a simple web application that supports the classification of products based on taken pictures. Users can create products and maintain additional information, as easily record product pictures for machine learning. The machine learning approach uses a lightweight CNN (MobileNetV2) and TensorFlow 2 for the classification task. The application is a proof of concept developed as part of a study program and is based on a food retailer scenario to classify fruits and vegetables at the checkout.
 
 ## Showcase
 
